@@ -1,5 +1,5 @@
 import { useState } from "react";
-import PersonalInfo from "./PersonalInfo";
+import PersonalInfo from "../../pages/PersonalInfo";
 import Education from "./Education";
 import WorkExperience from "./Experience";
 import Skills from "./Skills";
@@ -23,18 +23,23 @@ const FormStepper: React.FC<FormStepperProps> = ({ setIsFinalStep }) => {
 
   const nextStep = () => {
     if (currentStep < steps.length - 1) {
-      setCurrentStep(currentStep + 1);
+      setCurrentStep(prev => prev + 1);
     }
-    // Activar el botón solo en el último paso
-    if (currentStep === steps.length - 2) {
+
+    // Si se llega al último paso, activar el botón de "Guardar y Continuar"
+    if (currentStep + 1 === steps.length - 1) {
       setIsFinalStep(true);
     }
   };
 
   const prevStep = () => {
     if (currentStep > 0) {
-      setCurrentStep(currentStep - 1);
-      setIsFinalStep(false); // Desactivar el botón si regresa
+      setCurrentStep(prev => prev - 1);
+    }
+
+    // Si se regresa del último paso, desactivar el botón de "Guardar y Continuar"
+    if (currentStep === steps.length - 1) {
+      setIsFinalStep(false);
     }
   };
 
